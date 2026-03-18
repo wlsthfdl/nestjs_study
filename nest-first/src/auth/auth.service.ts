@@ -1,11 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { UserSevice } from './user.service';
+import { UserService } from './user.service';
 import { User } from './entity/user.entity';
 import { UserDTO } from './dto/user.dto';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserSevice) {}
+  constructor(private userService: UserService) {}
 
   async registerUser(newUser: UserDTO): Promise<User> {
     const userFind = await this.userService.findByFields({

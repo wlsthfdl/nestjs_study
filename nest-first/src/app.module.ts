@@ -5,8 +5,8 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatsModule } from './cats/cats.module';
 import { LoggerMiddleware } from './cats/middleware/logger.middleware';
+import { User } from './auth/entity/user.entity';
 import { AuthModule } from './auth/auth.module';
-
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -16,10 +16,11 @@ import { AuthModule } from './auth/auth.module';
       username: 'root',
       password: 'root',
       database: 'test',
-      entities: [],
+      entities: [User],
       synchronize: true,
     }),
     CatsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
