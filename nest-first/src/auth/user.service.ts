@@ -1,0 +1,21 @@
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
+import { UserDTO } from './dto/user.dto';
+import { User } from './entity/user.entity';
+
+@Injectable()
+export class UserSevice {
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+  ) {}
+
+  async findByFields(options: FindOneOptions<User>): Promise<User | null> {
+    return await this.userRepository.findOne(options);
+  }
+
+  async save(userDTO: User): Promise<User> {
+    return await this.userRepository.save(userDTO);
+  }
+}
