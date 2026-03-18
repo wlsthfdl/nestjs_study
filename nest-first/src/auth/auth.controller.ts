@@ -11,11 +11,18 @@ export class AuthController {
     return 'ok';
   }
 
+  //회원가입
   @Post('register')
   async registerAccount(
     @Req() req: Request,
     @Body() UserDTO: UserDTO,
   ): Promise<any> {
     return await this.authService.registerUser(UserDTO);
+  }
+
+  //로그인
+  @Post('login')
+  async login(@Body() user: UserDTO): Promise<any> {
+    return await this.authService.validateUser(user);
   }
 }
