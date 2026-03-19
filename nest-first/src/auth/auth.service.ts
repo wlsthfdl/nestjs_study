@@ -8,10 +8,15 @@ import { UserService } from './user.service';
 import { User } from './entity/user.entity';
 import { UserDTO } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
+import { Payload } from './security/payload.interface';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private jwtService: JwtService,
+  ) {}
 
   //회원가입
   async registerUser(newUser: UserDTO): Promise<UserDTO> {
@@ -31,12 +36,14 @@ export class AuthService {
   }
 
   //로그인
-  async validateUser(userDTO: UserDTO): Promise<UserDTO | null> {
+  async validateUser(
+    userDTO: UserDTO,
+  ): Promise<{ accessToken: string } | null> {
     const userFind = await this.userService.findByFields({
       where: { username: userDTO.username },
     });
 
-    if (!userFind) return null;
+    if (!userFind) throw new UnauthorizedException('User not found');
 
     //비밀번호 유효성 체크
     const validatePassword = await bcrypt.compare(
@@ -44,10 +51,28 @@ export class AuthService {
       userFind.password,
     );
 
-    if (!userFind || !validatePassword) {
-      throw new UnauthorizedException();
-    }
+    if (!validatePassword) throw new UnauthorizedException();
 
-    return userFind;
+    // jwt토큰
+    /** HEADER.PRYLOAD.SIGNATURE
+     * 헤더: 토큰의 타입과 암호화 알고리즘 정의
+     * 페이로드: 토큰에 담길 정보를 넣음. iss, exp, sub 등
+     * 시그니처: 헤더+페이로드+비밀키를 합쳐서 암호화한 것
+     */
+    const payload: Payload = {
+      id: userFind.id,
+      username: userFind.username,
+    };
+
+    return {
+      accessToken: this.jwtService.sign(payload),
+    };
+  }
+
+  //Payload id로 유저 조회해오기
+  async tokenValidationUser(payload: Payload): Promise<User | null> {
+    return await this.userService.findByFields({
+      where: { id: payload.id },
+    });
   }
 }

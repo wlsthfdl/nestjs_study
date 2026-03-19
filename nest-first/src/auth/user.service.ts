@@ -12,6 +12,7 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
+  //유저 조회
   async findByFields(options: FindOneOptions<User>): Promise<User | null> {
     // DB조회라 User(Entity)사용
     return await this.userRepository.findOne(options);
