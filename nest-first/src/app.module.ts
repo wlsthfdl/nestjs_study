@@ -7,6 +7,7 @@ import { CatsModule } from './cats/cats.module';
 import { LoggerMiddleware } from './cats/middleware/logger.middleware';
 import { User } from './auth/entity/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { UserAuthority } from './auth/entity/user-authority.entity';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
@@ -16,8 +17,9 @@ import { AuthModule } from './auth/auth.module';
       username: 'root',
       password: 'root',
       database: 'test',
-      entities: [User],
-      synchronize: true,
+      entities: [User, UserAuthority],
+      synchronize: false,
+      logging: true,
     }),
     CatsModule,
     AuthModule,
