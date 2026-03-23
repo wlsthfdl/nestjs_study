@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
-import { User } from '../entity/user.entity';
+import { User } from 'src/domain/user.entity';
 import { Request } from 'express';
 
 @Injectable()

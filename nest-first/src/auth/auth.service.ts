@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { User } from './entity/user.entity';
+import { User } from 'src/domain/user.entity';
 import { UserDTO } from './dto/user.dto';
 import * as bcrypt from 'bcrypt';
 import { Payload } from './security/payload.interface';
