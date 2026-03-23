@@ -18,10 +18,11 @@ export class UserService {
     return await this.userRepository.findOne(options);
   }
 
+  //저장
   async save(userDTO: UserDTO): Promise<UserDTO> {
     //암호화
     await this.transfomrPassword(userDTO);
-    console.log(userDTO);
+
     // 클라이언트에서 입력 UserDTO 사용
     const user = this.userRepository.create(userDTO);
 

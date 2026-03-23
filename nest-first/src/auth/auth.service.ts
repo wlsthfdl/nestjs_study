@@ -28,6 +28,7 @@ export class AuthService {
       throw new HttpException('Username already used!', HttpStatus.BAD_REQUEST);
     }
 
+    //유저 생성
     const user = new User();
     user.username = newUser.username;
     user.password = newUser.password;
@@ -59,20 +60,39 @@ export class AuthService {
      * 페이로드: 토큰에 담길 정보를 넣음. iss, exp, sub 등
      * 시그니처: 헤더+페이로드+비밀키를 합쳐서 암호화한 것
      */
+    this.convertInAuthorities(userFind);
+
+    // JWT payload 생성
     const payload: Payload = {
       id: userFind.id,
       username: userFind.username,
+      authorities: userFind.authorities,
     };
 
+    //토큰 발급
     return {
       accessToken: this.jwtService.sign(payload),
     };
   }
 
-  //Payload id로 유저 조회해오기
+  //토큰 검증 후 유저조회
   async tokenValidationUser(payload: Payload): Promise<User | null> {
-    return await this.userService.findByFields({
+    //id로 유저 조회
+    const userFind = await this.userService.findByFields({
       where: { id: payload.id },
     });
+    if (!userFind) return null;
+    return userFind;
+  }
+
+  private convertInAuthorities(user: User): User {
+    if (user && user.authorities) {
+      const authorities: any[] = [];
+      user.authorities.forEach((authority) => {
+        authorities.push({ name: authority.authorityName });
+      });
+      user.authorities = authorities;
+    }
+    return user;
   }
 }
