@@ -75,7 +75,7 @@ export class AuthService {
     };
   }
 
-  //토큰 검증 후 유저조회
+  // 4. user조회
   async tokenValidationUser(payload: Payload): Promise<User | null> {
     //id로 유저 조회
     const userFind = await this.userService.findByFields({

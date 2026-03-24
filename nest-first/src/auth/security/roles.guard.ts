@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { User } from 'src/domain/user.entity';
 import { Request } from 'express';
 
+// 5. RolesGuard 실행(권한 체크)
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
@@ -11,7 +12,8 @@ export class RolesGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const roles = this.reflector.get<string[]>('roles', context.getHandler()); // "@Roles()에서 설정한 값 가져오기"
+    const roles = this.reflector.get<string[]>('roles', context.getHandler());
+    // "@Roles()에서 설정한 값 가져오기"
 
     if (!roles) return true; //권한 설정 없으면 그냥 통과
 

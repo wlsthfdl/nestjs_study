@@ -7,6 +7,8 @@ import {
   Controller,
   Get,
   UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UserDTO } from './dto/user.dto';
 import type { Response } from 'express';
@@ -28,6 +30,7 @@ export class AuthController {
 
   //회원가입
   @Post('register')
+  @UsePipes(ValidationPipe)
   async registerAccount(
     @Req() req: Request,
     @Body() UserDTO: UserDTO,
@@ -43,6 +46,7 @@ export class AuthController {
     return res.json(jwt);
   }
 
+  //인증
   @Get('authenticate')
   @UseGuards(AuthGuard)
   isAuthenticated(@Req() req: AuthenticatedRequest): Payload {
@@ -50,6 +54,7 @@ export class AuthController {
     return user;
   }
 
+  //관리자 여부확인
   @Get('admin-role')
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(RoleType.ADMIN) //admin일때만 가능

@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
  * 컨트롤러 실행 전에 가로채서 허용 여부를 결정한다.
  *
  */
+// 1. AuthGuard 실행: 요청에 토큰이 있는지 확인
 @Injectable()
 export class AuthGuard extends NestAuthGuard('jwt') {
   /** canActivate
