@@ -9,8 +9,8 @@ import { Payload } from './payload.interface';
 export class jwtStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), //요청 헤더에서 jwt 추출
-      ignoreExpiration: true,
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), //요청 헤더(HTTP header)에서 jwt 추출
+      ignoreExpiration: false, //jwt유효기간 무시?
       secretOrKey: 'SECRET_KEY',
     });
   }

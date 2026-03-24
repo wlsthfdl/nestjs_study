@@ -44,6 +44,7 @@ export class AuthService {
       where: { username: userDTO.username },
     });
 
+    //유저가 없습니다.
     if (!userFind) throw new UnauthorizedException('User not found');
 
     //비밀번호 유효성 체크
@@ -52,6 +53,7 @@ export class AuthService {
       userFind.password,
     );
 
+    //비밀번호 예외처리
     if (!validatePassword) throw new UnauthorizedException();
 
     // jwt토큰

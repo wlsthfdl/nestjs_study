@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserAuthority } from './user-authority.entity';
+import { ArticleEntity } from './article.entity';
 
 @Entity('user')
 export class User {
@@ -17,4 +18,7 @@ export class User {
     eager: true,
   })
   authorities?: UserAuthority[];
+
+  @OneToMany(() => ArticleEntity, (article) => article.user)
+  articles?: ArticleEntity[];
 }

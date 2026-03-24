@@ -6,6 +6,7 @@ import { CatsModule } from './cats/cats.module';
 import { LoggerMiddleware } from './cats/middleware/logger.middleware';
 import { AuthModule } from './auth/auth.module';
 import { ormConfig } from './orm.config';
+import { ArticleModule } from './article/article.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ormConfig } from './orm.config';
     }),
     CatsModule,
     AuthModule,
+    ArticleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
