@@ -6,6 +6,7 @@ import {
   Get,
   ParseIntPipe,
   Param,
+  Put,
 } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -37,5 +38,19 @@ export class ArticleController {
   async readArticle(@Param('articleId', ParseIntPipe) articleId: number) {
     const article = await this.articleService.getArticle(articleId);
     return article;
+  }
+
+  //게시글 수정
+  @UseGuards(AuthGuard)
+  @Put(':articleId')
+  async updateArticle(
+    @Param('articleId', ParseIntPipe) articleId: number,
+    @UserDeco() user: User,
+    @Body() body: ArticleEntity,
+  ) {
+    const userId = user.id;
+    const { title, content } = body;
+
+    return this.articleService.modifyArticle(articleId, title, content, userId);
   }
 }
