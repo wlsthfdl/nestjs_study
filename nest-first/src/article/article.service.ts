@@ -11,11 +11,23 @@ export class ArticleService {
     private readonly articleRepository: Repository<ArticleEntity>,
   ) {}
 
+  //게시글 저장
   async createArticle(title: string, content: string, userId: number) {
-    await this.articleRepository.save({
+    const article = await this.articleRepository.save({
       title,
       content,
       user: { id: userId },
     });
+    return article;
+  }
+
+  //게시글 read
+  async getArticle(articleId: number) {
+    const article = await this.articleRepository.findOne({
+      where: {
+        id: articleId,
+      },
+    });
+    return article;
   }
 }
