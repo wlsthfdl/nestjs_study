@@ -2,7 +2,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 function ormConfig(): TypeOrmModuleOptions {
   const commonConf = {
-    SYNCHRONIZE: false,
+    SYNCHRONIZE: true,
     ENTITIES: [__dirname + '/domain/*.entity{.ts,.js}'],
     MIGRATIONS: [__dirname + '/migrations/**/*{.ts,.js}'],
     MIGRATIONS_RUN: false,

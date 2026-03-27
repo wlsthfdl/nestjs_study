@@ -53,13 +53,23 @@ export class ArticleService {
     }
 
     //수정
-    const updateArticle = await this.articleRepository.update(
+    const updateRslt = await this.articleRepository.update(
       { id: articleId }, //조건
       {
         title: title,
         content: content,
       }, //수정할 내용
     );
-    return { affected: updateArticle?.affected }; //affected가 1이면 수정됨, 0이면 오류
+    return { affected: updateRslt?.affected }; //affected가 1이면 수정됨, 0이면 오류
+  }
+
+  //게시글 삭제
+  async removeArticle(userId: number, articleId: number) {
+    const deleteRslt = await this.articleRepository.delete({
+      id: articleId,
+      user: { id: userId },
+    });
+
+    return { affected: deleteRslt?.affected };
   }
 }
