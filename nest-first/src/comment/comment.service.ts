@@ -9,4 +9,20 @@ export class CommentService {
     @InjectRepository(CommentEntity)
     private readonly commentRepository: Repository<CommentEntity>,
   ) {}
+
+  async createComment(
+    content: string,
+    userId: number,
+    articleId: number,
+    parentId?: number,
+  ) {
+    const comment = await this.commentRepository.save({
+      content: content,
+      parentId: parentId,
+      user: { id: userId },
+      article: { id: articleId },
+    });
+
+    return comment;
+  }
 }

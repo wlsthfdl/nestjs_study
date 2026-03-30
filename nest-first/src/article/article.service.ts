@@ -2,7 +2,6 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ArticleEntity } from 'src/domain/article.entity';
 import { Repository } from 'typeorm';
-import { User } from 'src/domain/user.entity';
 
 @Injectable()
 export class ArticleService {

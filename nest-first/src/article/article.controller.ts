@@ -17,9 +17,7 @@ import { User } from 'src/domain/user.entity';
 
 @Controller('article')
 export class ArticleController {
-  constructor(private readonly articleService: ArticleService) {
-    console.log(ArticleDto);
-  }
+  constructor(private readonly articleService: ArticleService) {}
 
   //게시글 create
   @UseGuards(AuthGuard) //로그인한 유저만 사용가능
