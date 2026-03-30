@@ -42,4 +42,14 @@ export class CommentService {
 
     return { affected: updateRslt?.affected };
   }
+
+  //댓글 삭제
+  async removeComment(commentId: number, userId: number) {
+    const deleteResult = await this.commentRepository.delete({
+      id: commentId,
+      user: { id: userId },
+    });
+
+    return { affected: deleteResult?.affected };
+  }
 }

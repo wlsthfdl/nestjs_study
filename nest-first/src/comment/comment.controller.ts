@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Param,
   ParseIntPipe,
   Post,
@@ -54,6 +55,21 @@ export class CommentController {
       userId,
       commentId,
     );
+    return res;
+  }
+
+  //댓글 삭제
+  @UseGuards(AuthGuard)
+  @Delete(':id')
+  async deleteComment(
+    @Param('id', ParseIntPipe) id: number,
+    @UserDeco() user: User,
+  ) {
+    const commentId = id;
+    const userId = user.id;
+
+    const res = await this.commentService.removeComment(commentId, userId);
+
     return res;
   }
 }
