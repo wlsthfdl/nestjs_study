@@ -73,5 +73,3 @@ export class ArticleService {
     return { affected: deleteRslt?.affected };
   }
 }
-
-//test

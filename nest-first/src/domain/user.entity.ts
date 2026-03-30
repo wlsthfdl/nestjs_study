@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserAuthority } from './user-authority.entity';
 import { ArticleEntity } from './article.entity';
+import { CommentEntity } from './comment.entity';
 
 @Entity('user')
 export class User {
@@ -21,4 +22,7 @@ export class User {
 
   @OneToMany(() => ArticleEntity, (article) => article.user)
   articles?: ArticleEntity[];
+
+  @OneToMany(() => CommentEntity, (comment) => comment.user)
+  comment?: CommentEntity[];
 }
