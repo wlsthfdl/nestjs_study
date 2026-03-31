@@ -18,6 +18,7 @@ import type { AuthenticatedRequest } from './security/authenticated-request';
 import { RolesGuard } from './security/roles.guard';
 import { RoleType } from './role-type';
 import { Roles } from './decorator/role.decorator';
+import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -38,6 +39,10 @@ export class AuthController {
     return await this.authService.registerUser(UserDTO);
   }
 
+  @ApiOperation({
+    summary: '로그인 API',
+    description: '사용자가 로컬 로그인을 합니다.',
+  })
   //로그인
   @Post('login')
   async login(@Body() user: UserDTO, @Res() res: Response): Promise<any> {

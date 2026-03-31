@@ -14,7 +14,7 @@ import { AuthGuard } from 'src/auth/security/auth.guard';
 import { UserDeco } from 'src/auth/decorator/user.decorator';
 import { ArticleDto } from './dto/article.dto';
 import { User } from 'src/domain/user.entity';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('게시글 API')
 @Controller('articles')
@@ -28,6 +28,7 @@ export class ArticleController {
   @ApiBody({
     type: ArticleDto,
   })
+  @ApiBearerAuth()
   //게시글 create
   @UseGuards(AuthGuard) //로그인한 유저만 사용가능
   @Post()
