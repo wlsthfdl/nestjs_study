@@ -14,11 +14,20 @@ import { AuthGuard } from 'src/auth/security/auth.guard';
 import { UserDeco } from 'src/auth/decorator/user.decorator';
 import { ArticleDto } from './dto/article.dto';
 import { User } from 'src/domain/user.entity';
+import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 
-@Controller('article')
+@ApiTags('게시글 API')
+@Controller('articles')
 export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
+  @ApiOperation({
+    summary: '게시글 작성 API',
+    description: '유저가 게시글을 작성한다.',
+  })
+  @ApiBody({
+    type: ArticleDto,
+  })
   //게시글 create
   @UseGuards(AuthGuard) //로그인한 유저만 사용가능
   @Post()

@@ -26,6 +26,9 @@ export class ArticleService {
       where: {
         id: articleId,
       },
+      relations: {
+        comment: true,
+      },
     });
     return article;
   }

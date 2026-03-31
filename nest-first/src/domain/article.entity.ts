@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 import { CommentEntity } from './comment.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('Article')
 export class ArticleEntity {
