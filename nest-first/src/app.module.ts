@@ -1,4 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  ValidationPipe,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -8,7 +13,7 @@ import { AuthModule } from './auth/auth.module';
 import { ormConfig } from './orm.config';
 import { ArticleModule } from './article/article.module';
 import { CommentModule } from './comment/comment.module';
-import { APP_FILTER } from '@nestjs/core';
+import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { HttpExceptionFilter } from './filter/http-exception.filter';
 
 @Module({
@@ -25,6 +30,7 @@ import { HttpExceptionFilter } from './filter/http-exception.filter';
   providers: [
     AppService,
     { provide: APP_FILTER, useClass: HttpExceptionFilter }, //의존성 주입으로 exception filter사용
+    { provide: APP_PIPE, useClass: ValidationPipe },
   ],
 })
 export class AppModule implements NestModule {
