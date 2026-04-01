@@ -8,6 +8,7 @@ import {
   Param,
   Put,
   Delete,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ArticleService } from './article.service';
 import { AuthGuard } from 'src/auth/security/auth.guard';
@@ -15,7 +16,9 @@ import { UserDeco } from 'src/auth/decorator/user.decorator';
 import { ArticleDto } from './dto/article.dto';
 import { User } from 'src/domain/user.entity';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { undefinedToNullInterceptor } from 'src/interceptors/undefinedToNull.interceptor';
 
+@UseInterceptors(undefinedToNullInterceptor)
 @ApiTags('게시글 API')
 @Controller('articles')
 export class ArticleController {
