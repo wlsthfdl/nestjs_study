@@ -8,6 +8,8 @@ import { AuthModule } from './auth/auth.module';
 import { ormConfig } from './orm.config';
 import { ArticleModule } from './article/article.module';
 import { CommentModule } from './comment/comment.module';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpExceptionFilter } from './filter/http-exception.filter';
 
 @Module({
   imports: [
@@ -20,7 +22,10 @@ import { CommentModule } from './comment/comment.module';
     CommentModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    { provide: APP_FILTER, useClass: HttpExceptionFilter }, //의존성 주입으로 exception filter사용
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
